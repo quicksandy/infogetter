@@ -1,3 +1,4 @@
-System,Model,PowerEdge,T610
-Firmware,Version,1.98
-Current,IP,192.168.1.93
+System,Model,PowerEdge,T620
+Firmware,Version,1.25.25
+Current,IP,192.168.1.120
+System Temp,69.8,F
