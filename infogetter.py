@@ -73,4 +73,4 @@ class Remote:
             self.quit = False
         else:
             print "Invalid argument count. Please rerun and use the format after script name: ip.add.r.ess username password"
-            self.quit = True
+            self.quit = True#
