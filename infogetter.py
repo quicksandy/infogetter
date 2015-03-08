@@ -52,13 +52,14 @@ class Remote:
                                     string1 = shlexed[0]+","+shlexed[1]+","+shlexed[-1]
                                     self.listToPrint.append(string1)
                             elif searchables == self.searchForTemp:
-                                shlexed[5] = shlexed[5]*1.8
+                                cel = shlexed[5]
+                                shlexed[5] = str(int(shlexed[5])*1.8+32)
                                 shlexed[6] = "F"
-                                print "System Temp:\t%s%s"%shlexed[5],shlexed[6]
+                                print "System Temp:\t%s %s or %s C"%(shlexed[5],shlexed[6],cel)
                                 string1 = "System Temp"+","+shlexed[5]+","+shlexed[6]
                                 self.listToPrint.append(string1)
                         except Exception as e:
-                            # print e
+                            print e
                             continue
     def export(self):
         with open(self.path,"w") as f:
