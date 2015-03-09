@@ -29,7 +29,7 @@ class Remote:
             commands = {"temp":"System Board Inlet Temp"}
             self.anotherFunction(commands,"getsensorinfo")
     def anotherFunction(self,list1,subcommand):
-        stdin, stdout, stderr = self.ssh.exec_command("racadm "+subcommand) 
+        stdin, stdout, stderr = self.ssh.exec_command("racadm "+subcommand)
         for key in list1:
             for line in stdout.readlines():
                 j = line.split("\t")
