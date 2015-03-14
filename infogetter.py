@@ -1,9 +1,10 @@
 __author__ = 'quicksand77'
 # 2.7.9
-import paramiko, re, shlex, os, sys
+import paramiko, re, shlex, os, sys, datetime, time
 class Remote:
     def __init__(self):
         self.makePath()
+        # self.time()
         self.listToWrite = []
         self.check()
         if not self.quit:
@@ -20,6 +21,11 @@ class Remote:
             self.command = "getsensorinfo"
             self.collectInfo(self.searchForTemp)
             self.export()
+    # def time(self):
+    #     self.month1 = int(datetime.datetime.now().strftime(("%m")))
+    #     self.day1 = int(datetime.datetime.now().strftime(("%d")))
+    #     self.hour1 = int(datetime.datetime.now().strftime(("%H")))
+    #     self.minute1 = int(datetime.datetime.now().strftime(("%M")))
     def makePath(self):
         if os.path.exists(".\output.txt"):
             self.path = ".\output.txt"
@@ -56,13 +62,17 @@ class Remote:
                                 shlexed[5] = str(int(shlexed[5])*1.8+32)
                                 shlexed[6] = "F"
                                 print "System Temp:\t%s %s or %s C"%(shlexed[5],shlexed[6],cel)
-                                string1 = shlexed[5]
+                                now = time.time()
+                                string1 = "t"+str(now)+","+shlexed[5]
                                 self.listToWrite.append(string1)
                         except Exception as e:
                             print e
                             continue
     def export(self):
-        with open(self.path,"w") as f:
+        if not os.path.exists(self.path):
+            with open(self.path,"w") as f:
+                print self.path+" not found, creating now."
+        with open(self.path,"a") as f:
             for thing in self.listToWrite:
                 f.write(thing+"\n")
     def check(self):
@@ -71,6 +81,13 @@ class Remote:
             self.username = sys.argv[2]
             self.passw = sys.argv[3]
             self.quit = False
+            self.rerun = "no"
+        elif len(sys.argv) == 5:
+            self.server = sys.argv[1]
+            self.username = sys.argv[2]
+            self.passw = sys.argv[3]
+            self.quit = False
+            self.rerun = sys.argv[4]
         else:
-            print "Invalid argument count. Please rerun and use the format after script name:\nipaddress username password"
+            print "Invalid argument count. Please rerun and use the format after script name:\nipaddress username password [number of times to run(optional)]"
             self.quit = True
